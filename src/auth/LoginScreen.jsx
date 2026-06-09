@@ -1,49 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity,
-  StyleSheet, ActivityIndicator, Alert
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
-import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
+import { loginUser } from '../services/authApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import LinearGradient from 'react-native-linear-gradient';
 
 const LoginScreen = ({ navigation, setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
   const [secure, setSecure] = useState(true);
 
-  const handleLogin = async () => {
-  if (!email || !password) {
-    Alert.alert('Error', 'Please enter username and password');
-    return;
-  }
+  const loginMutation = useMutation({
+    mutationFn: loginUser,
 
-  setLoading(true);
+    onSuccess: async data => {
+      try {
+        // Save token
+        await AsyncStorage.setItem('token', data.accessToken);
 
-  try {
-    const response = await axios.post('https://dummyjson.com/auth/login', {
-      username: email.trim(),
-      password: password,
+        console.log('Login success:', data);
+
+        setIsLoggedIn(true);
+
+        navigation.replace('Home');
+      } catch (error) {
+        console.log('Storage Error:', error);
+      }
+    },
+
+    onError: error => {
+      console.log('Error:', error?.message);
+
+      Alert.alert('Login Failed', 'Invalid username or password!');
+    },
+  });
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter username and password');
+      return;
+    }
+
+    loginMutation.mutate({
+      email,
+      password,
     });
-
-    console.log('Login success:', response.data);
-    setIsLoggedIn(true);
-    navigation.replace('Home');
-
-  } catch (error) {
-    console.log('Error:', error.message);
-    Alert.alert('Login Failed', 'Invalid username or password!');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
-    <LinearGradient
-      colors={['#1e3a8a', '#0f172a']}
-      style={styles.container}
-    >
-
+    <LinearGradient colors={['#1e3a8a', '#0f172a']} style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.logo}>💬</Text>
 
@@ -81,22 +95,20 @@ const LoginScreen = ({ navigation, setIsLoggedIn }) => {
         <TouchableOpacity
           style={styles.btn}
           onPress={handleLogin}
-          disabled={loading}
+          disabled={loginMutation.isPending}
         >
           <LinearGradient
             colors={['#3b82f6', '#2563eb']}
             style={styles.btnGradient}
           >
-            {loading
-              ? <ActivityIndicator color="#fff" />
-              : <Text style={styles.btnText}>Login</Text>
-            }
+            {loginMutation.isPending ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.btnText}>Login</Text>
+            )}
           </LinearGradient>
         </TouchableOpacity>
-
-
       </View>
-
     </LinearGradient>
   );
 };

@@ -6,8 +6,8 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
-import background_img from '../Assets/bg-img.png';
-import logo from '../Assets/mokhsh_logo.png';
+import background_img from '../Assets/Chat_Background.png';
+import logo from '../Assets/Chat_App-logo.png';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 const scale = (size) => (SCREEN_WIDTH / 375) * size;
 const verticalScale = (size) => (SCREEN_HEIGHT / 812) * size;
@@ -133,13 +133,13 @@ const HomeScreen = ({ navigation, setIsLoggedIn }) => {
         </View>
 
         {/* Tabs */}
-        <View style={styles.tabs}>
+        {/* <View style={styles.tabs}>
           {['All', 'Unread', 'Favorites', 'Groups'].map(tab => (
             <TouchableOpacity key={tab} style={styles.tab}>
               <Text style={styles.tabText}>{tab}</Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </View> */}
 
         {/* Content */}
         {loading ? (
@@ -288,8 +288,11 @@ const styles = StyleSheet.create({
   logoImage: {
   width: 140,
   height: 40,
+  marginLeft: -20,
+  alignSelf: "center",
   resizeMode: 'contain',
   opacity: 0.95,
+  
 },
 headerRow: {
   flexDirection: 'row',
