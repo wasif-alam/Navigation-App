@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  Image,
   Alert,
 } from 'react-native';
 import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '../services/authApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import logo from '../Assets/Chat_App-logo.png';
 import LinearGradient from 'react-native-linear-gradient';
 
 const LoginScreen = ({ navigation, setIsLoggedIn }) => {
@@ -59,15 +60,15 @@ const LoginScreen = ({ navigation, setIsLoggedIn }) => {
   return (
     <LinearGradient colors={['#1e3a8a', '#0f172a']} style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.logo}>💬</Text>
+        {/* <Image source={logo} style={styles.logo}  /> */}
 
-        <Text style={styles.title}>ChatApp</Text>
+        <Image source={logo} style={styles.logo}  />
         <Text style={styles.subtitle}>Login to your account</Text>
 
         {/* Email */}
         <View style={styles.inputBox}>
           <TextInput
-            placeholder="Username"
+            placeholder="Username.."
             placeholderTextColor="#cbd5f5"
             style={styles.input}
             value={email}
@@ -78,7 +79,7 @@ const LoginScreen = ({ navigation, setIsLoggedIn }) => {
         {/* Password */}
         <View style={styles.inputBox}>
           <TextInput
-            placeholder="Password"
+            placeholder="Password.."
             placeholderTextColor="#cbd5f5"
             secureTextEntry={secure}
             style={styles.input}
@@ -128,13 +129,18 @@ const styles = StyleSheet.create({
     padding: 25,
     backdropFilter: 'blur(10px)',
   },
-
+  // logo: {
+  //   textAlign: 'center',
+  //   fontSize: 40,
+  // },
   logo: {
-    fontSize: 40,
-    textAlign: 'center',
+    width: 180,
+    height: 55,
+    resizeMode: 'contain',
+    alignSelf: 'center',
     marginBottom: 10,
   },
-
+  
   title: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -145,8 +151,8 @@ const styles = StyleSheet.create({
   subtitle: {
     textAlign: 'center',
     color: '#cbd5f5',
-    marginBottom: 25,
-    fontSize: 10,
+    marginBottom: 20,
+    fontSize: 15,
   },
 
   inputBox: {
