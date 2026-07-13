@@ -134,11 +134,13 @@ const styles = StyleSheet.create({
   //   fontSize: 40,
   // },
   logo: {
-    width: 180,
-    height: 55,
+    width: 500,
+    height: 60,
     resizeMode: 'contain',
     alignSelf: 'center',
-    marginBottom: 10,
+    marginBottom: 1,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
   
   title: {
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
   subtitle: {
     textAlign: 'center',
     color: '#cbd5f5',
-    marginBottom: 20,
+    marginBottom: 15,
     fontSize: 15,
   },
 
@@ -191,6 +193,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+    fontWeight: 205
   },
 
   footer: {

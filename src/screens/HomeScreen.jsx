@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import background_img from '../Assets/Chat_Background.png';
 import logo from '../Assets/Chat_App-logo.png';
+import background_img2 from '../Assets/chat_background2.jpg';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 const scale = (size) => (SCREEN_WIDTH / 375) * size;
@@ -81,7 +82,7 @@ const HomeScreen = ({ navigation, setIsLoggedIn }) => {
 
   return (
     <ImageBackground 
-      source={background_img}
+      source={background_img2}
       style={{ flex: 1, color: '#1b315a' }}
       blurRadius={2}
       resizeMode="cover"
